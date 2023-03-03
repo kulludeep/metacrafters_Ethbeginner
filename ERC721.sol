@@ -62,28 +62,28 @@ contract ERC721 is IERC721 {
 
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) public isApprovedForAll;
-
+//This function is an implementation of the IERC165 interface function. It returns a boolean value indicating whether the contract supports the specified interface ID.
     function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return
             interfaceId == type(IERC721).interfaceId ||
             interfaceId == type(IERC165).interfaceId;
     }
-
+// This function returns the address that owns the specified token ID. It checks if the token ID exists in the _ownerOf mapping, and throws an error if it does not.
     function ownerOf(uint id) external view returns (address owner) {
         owner = _ownerOf[id];
         require(owner != address(0), "token doesn't exist");
     }
-
+// This function returns the number of tokens owned by the specified address. It checks if the owner address is valid 
     function balanceOf(address owner) external view returns (uint) {
         require(owner != address(0), "owner = zero address");
         return _balanceOf[owner];
     }
-
+// This function approves or revokes an operator for all tokens of the sender.
     function setApprovalForAll(address operator, bool approved) external {
         isApprovedForAll[msg.sender][operator] = approved;
         emit ApprovalForAll(msg.sender, operator, approved);
     }
-
+// This function approves another address to transfer the specified token ID.
     function approve(address spender, uint id) external {
         address owner = _ownerOf[id];
         require(
@@ -95,12 +95,12 @@ contract ERC721 is IERC721 {
 
         emit Approval(owner, spender, id);
     }
-
+// This function returns the approved address for the specified token ID.
     function getApproved(uint id) external view returns (address) {
         require(_ownerOf[id] != address(0), "token doesn't exist");
         return _approvals[id];
     }
-
+// This function checks if the specified address is the owner of the token, or if it is approved
     function _isApprovedOrOwner(
         address owner,
         address spender,
