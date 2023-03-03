@@ -32,8 +32,8 @@ interface IERC721 is IERC165 {
         address operator
     ) external view returns (bool);
 }
-
-interface IERC721Receiver {
+//This function is called when a contract receives an ERC721 token. It returns a specific value indicating whether the contract accepts the token.
+interface IERC721Receiver {     
     function onERC721Received(
         address operator,
         address from,
