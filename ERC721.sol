@@ -110,7 +110,8 @@ contract ERC721 is IERC721 {
             isApprovedForAll[owner][spender] ||
             spender == _approvals[id]);
     }
-
+// The sender of the transaction must be authorized to transfer the token by either being the owner of the token or 
+// being approved to manage the token by the owner.
     function transferFrom(address from, address to, uint id) public {
         require(from == _ownerOf[id], "from != owner");
         require(to != address(0), "transfer to zero address");
@@ -125,7 +126,7 @@ contract ERC721 is IERC721 {
 
         emit Transfer(from, to, id);
     }
-
+// The function first calls the onERC721Received function on the recipient to address to ensure that the transfer is safe.
     function safeTransferFrom(address from, address to, uint id) external {
         transferFrom(from, to, id);
 
@@ -152,7 +153,7 @@ contract ERC721 is IERC721 {
             "unsafe recipient"
         );
     }
-
+//  Creates a new token with ID id and assigns it to the address to.
     function _mint(address to, uint id) internal {
         require(to != address(0), "mint to zero address");
         require(_ownerOf[id] == address(0), "already minted");
@@ -162,7 +163,7 @@ contract ERC721 is IERC721 {
 
         emit Transfer(address(0), to, id);
     }
-
+//  Destroys the token with ID id.
     function _burn(uint id) internal {
         address owner = _ownerOf[id];
         require(owner != address(0), "not minted");
